@@ -1,0 +1,23 @@
+Переменная - хранилище наших значений
+Типы (примитивные)
+Объявления переменных: var
+Нулевые значения
+Объявление с инициализацией short syntax
+Области видимых переменных
+Константы
+Преобразование типов(простые
+Вывод переменных в консоль
+%T - type
+%v - value
+%s - string
+\n - lineSeparator
+_ = two - life...
+=================
+bool - true/false - if("") -> false
+string - ""
+int int8 int16 int32 int64
+unit unit8 unit16 unit32 unit64  always > 0
+byte (unit8)
+rune (int32)  - symbol
+float32, float64
+complex64, complex128
