@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	//Указатели это тип данных которые в качестве значения хранят фдрес ячейки
@@ -27,4 +29,37 @@ func main() {
 	*newPointer = 3
 	fmt.Printf("%T %#v %#v \n", newPointer, newPointer, *newPointer)
 
+	fmt.Println("\n ============== pointers usage ==============")
+	//pointers usage
+	//side effects
+	num := 3
+	square(num) // копируется значение и передаем в функцию
+	fmt.Println(num)
+	fmt.Println("==============")
+	squarePointer(&num)
+	fmt.Println(num)
+	fmt.Println("==============")
+	fmt.Println("==============")
+
+	// empty value flag
+	var wallet1 *int
+	fmt.Println(hasWallet(wallet1)) // false
+
+	wallet2 := 0
+	fmt.Println(hasWallet(&wallet2)) // true
+
+	wallet3 := 100
+	fmt.Println(hasWallet(&wallet3)) // true
+}
+
+func square(num int) {
+	num *= num
+}
+
+func squarePointer(num *int) {
+	*num = *num * *num
+}
+
+func hasWallet(money *int) bool {
+	return money != nil
 }
