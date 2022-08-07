@@ -6,7 +6,10 @@ func main() {
 	//variadicFunctions()
 	//convertToArrayPointer()
 	//passToFunction()
-	sliceWithNew()
+	//sliceWithNew()
+	//getSlice()
+	//copySlice()
+	deleteElement()
 }
 
 func variadicFunctions() {
@@ -82,4 +85,82 @@ func sliceWithNew() {
 	fmt.Printf("type: %T value: %#v\n", newSlice3, newSlice3)
 	fmt.Printf("length: %d capacity: %d\n\n", len(newSlice3), cap(newSlice3))
 
+}
+
+func getSlice() {
+	intArr := [...]int{1, 2, 3, 4, 5}
+	fmt.Printf("type: %T, value: %#v\n\n", intArr, intArr)
+
+	intSlice := intArr[1:3]
+	fmt.Printf("type: %T, value: %#v\n", intSlice, intSlice)
+	fmt.Printf("length: %d, capacity: %d\n\n", len(intSlice), cap(intSlice))
+
+	fullSlice := intArr[:] // ubtArr[0:5]
+	fmt.Printf("type: %T, value: %#v\n", fullSlice, fullSlice)
+	fmt.Printf("length: %d, capacity: %d\n\n", len(fullSlice), cap(fullSlice))
+
+	sliceFromSlice := fullSlice[:3]
+	fmt.Printf("type: %T, value: %#v\n", sliceFromSlice, sliceFromSlice)
+	fmt.Printf("length: %d, capacity: %d\n\n", len(sliceFromSlice), cap(sliceFromSlice))
+
+	intArr[2] = 500 // реслайс ссылается на самый первый массив
+	fmt.Printf("type: %T, value: %#v\n", intArr, intArr)
+	fmt.Printf("type: %T, value: %#v\n", intSlice, intSlice)
+	fmt.Printf("type: %T, value: %#v\n", fullSlice, fullSlice)
+	fmt.Printf("type: %T, value: %#v\n\n", sliceFromSlice, sliceFromSlice)
+}
+
+func copySlice() {
+	destination := make([]string, 0, 2)
+	source := []string{"Vasya", "Petya", "Katya"}
+
+	fmt.Println("Copied", copy(destination, source))
+	fmt.Printf("Type: %T Value: %#v\n", destination, destination)
+	fmt.Printf("length: %d, capacity: %d\n\n", len(destination), cap(destination))
+
+	destination = make([]string, 2, 3)
+	fmt.Println("Copied", copy(destination, source))
+	fmt.Printf("Type: %T Value: %#v\n", destination, destination)
+	fmt.Printf("length: %d, capacity: %d\n\n", len(destination), cap(destination))
+
+	destination = make([]string, 3, len(source))
+	fmt.Println("Copied", copy(destination, source))
+	fmt.Printf("Type: %T Value: %#v\n", destination, destination)
+	fmt.Printf("length: %d, capacity: %d\n\n", len(destination), cap(destination))
+
+	var defaultSlice []string
+	fmt.Printf("Type: %T Value: %#v\n", defaultSlice, defaultSlice)
+	fmt.Printf("length: %d, capacity: %d\n\n", len(defaultSlice), cap(defaultSlice))
+
+	fmt.Println("Copied", copy(defaultSlice, source))
+	fmt.Printf("Type: %T Value: %#v\n", defaultSlice, defaultSlice)
+	fmt.Printf("length: %d, capacity: %d\n\n", len(defaultSlice), cap(defaultSlice))
+
+	rightCopy := append(make([]string, 0, len(source)), source...)
+	fmt.Printf("Type: %T Value: %#v\n", rightCopy, rightCopy)
+	fmt.Printf("length: %d, capacity: %d\n\n", len(rightCopy), cap(rightCopy))
+
+}
+
+func deleteElement() {
+	slice := []int{1, 2, 3, 4, 5}
+	i := 2
+	fmt.Printf("Type: %T Value: %#v\n", slice, slice)
+	fmt.Printf("length: %d, capacity: %d\n\n", len(slice), cap(slice))
+
+	withAppend := append(slice[:i], slice[i+1:]...) // ломает исходный слайс
+	fmt.Printf("Type: %T Value: %#v\n", withAppend, withAppend)
+	fmt.Println(slice)
+
+	slice = []int{1, 2, 3, 4, 5}
+
+	withCopy := slice[:i+copy(slice[i:], slice[i+1:])] //ломает исходный слайс
+	fmt.Printf("Type: %T Value: %#v\n", withCopy, withCopy)
+	fmt.Println(slice)
+
+	slice = []int{1, 2, 3, 4, 5}
+
+	slice = append(slice[:i], slice[i+1:]...) // меняет исходный слайс
+	fmt.Printf("Type: %T Value: %#v\n", slice, slice)
+	fmt.Println(slice)
 }
